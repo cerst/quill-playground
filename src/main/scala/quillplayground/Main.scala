@@ -30,16 +30,6 @@ object Main extends App {
     query[Comment]
   }
 
-  // ===========================================================================================================================================================
-  // QUERY
-  // ===========================================================================================================================================================
-  val topProductNames = quote {
-    (for {
-      (category, product) <- Categories.join(Products).on(_.id == _.categoryId)
-      comment <- Comments.join(_.productId == product.id)
-    } yield (product.rating, product.name)).sortBy(_._1)(Ord.desc).take(100)
-  }
 
-  mysqlDatabase run topProductNames
 
 }
